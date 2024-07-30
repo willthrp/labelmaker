@@ -85,9 +85,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     nextButton.addEventListener('click', () => {
-        localStorage.setItem('queue', JSON.stringify(queue));
-        window.location.href = '/print';
+        const queue = JSON.parse(localStorage.getItem('queue'));
+        const queryString = new URLSearchParams({ queue: JSON.stringify(queue) }).toString();
+        window.location.href = `/print?${queryString}`;
     });
+    
 
     updateQueue();
 });

@@ -16,6 +16,7 @@
     "express": "^4.19.2",
     "express-handlebars": "^5.3.5",
     "path": "^0.12.7",
-    "square": "^37.1.1"
+    "square": "^37.1.1",
+    "bwip-js": "^2.0.7"
   }
 }

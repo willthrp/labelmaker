@@ -1,23 +1,58 @@
-<div>
-    <h1 class="title">Print Labels</h1>
-    <div id="print-queue"></div>
-    <button class="button is-primary" onclick="printLabels()">Print</button>
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const queue = JSON.parse(localStorage.getItem('queue')) || [];
-        const printQueue = document.getElementById('print-queue');
-        queue.forEach(item => {
-            const div = document.createElement('div');
-            div.classList.add('box');
-            div.innerHTML = `<div>${item.name} - Quantity: ${item.quantity}</div>`;
-            printQueue.appendChild(div);
-        });
-    });
-
-    function printLabels() {
-        // Implement print functionality (e.g., using jsPDF)
-        alert('Printing labels...');
-    }
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Print Labels</title>
+    <style>
+        .label {
+            width: 2.5in;
+            height: 1.25in;
+            border: 1px solid #000;
+            margin: 10px;
+            display: flex;
+            justify-content: space-between;
+            padding: 5px;
+            box-sizing: border-box;
+            border-radius: 5px;
+        }
+        .left {
+            flex: 1;
+            text-align: left;
+        }
+        .right {
+            flex: 0 0 30%;
+            text-align: right;
+        }
+        .logo {
+            width: 100%;
+            height: auto;
+        }
+        .barcode {
+            width: 100%;
+            height: auto;
+        }
+        .name {
+            font-size: small;
+        }
+    </style>
+</head>
+<body>
+    <div id="labels-container">
+        {{#each items}}
+        <div class="label">
+            <div class="left">
+                <img class="logo" src="/public/images/gg_atHome-1.png" alt="GG At Home">
+                <div class="name"><strong>{{name}}</strong></div>
+                <div>{{description}}</div>
+            </div>
+            <div class="right">
+                <img src="{{barcode}}" class="barcode" alt="Barcode">
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <script>
+        window.print();
+    </script>
+</body>
+</html>

@@ -23,8 +23,9 @@ const getItems = async () => {
             return {
                 id: item.id,
                 name: item.itemData.name,
+                description: item.itemData.description,
                 price: price / 100, // Convert cents to dollars
-                barcode: gtin || sku, // Use GTIN if available, otherwise use SKU
+                barcode: sku, // Use GTIN if available, otherwise use SKU
             };
         });
     } catch (error) {
