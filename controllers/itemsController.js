@@ -15,15 +15,16 @@ const getItems = async () => {
 
         return items.map(item => {
             const variation = item.itemData.variations[0];
+            const priceBigInt = variation && variation.itemVariationData.priceMoney ? variation.itemVariationData.priceMoney.amount : 0n;
+            const price = Number(priceBigInt); // Explicit conversion to Number
+            const gtin = variation && variation.itemVariationData.upc ? variation.itemVariationData.upc : null;
             const sku = variation && variation.itemVariationData.sku ? variation.itemVariationData.sku : 'N/A';
-            const gtin = variation && variation.itemVariationData.upc ? variation.itemVariationData.upc : 'N/A';
-            const price = variation && variation.itemVariationData.priceMoney ? variation.itemVariationData.priceMoney.amount : 0;
+
             return {
                 id: item.id,
                 name: item.itemData.name,
-                price: Number(price) / 100, // Explicit conversion to Number
-                gtin: gtin,
-                sku: sku,
+                price: price / 100, // Convert cents to dollars
+                barcode: gtin || sku, // Use GTIN if available, otherwise use SKU
             };
         });
     } catch (error) {
